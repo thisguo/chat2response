@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: chat2response
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dev.milvus.189.cn:3306/chat_response?useSSL=false&serverTimezone=UTC
+    username: root
+    password: guoshengkai373
+  mybatis:
+    smart:
+      auto-sync-db: true
+      naming-convention: underline_upper
+      table-prefix: ae_
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8080
+
+management:
+  user:
+    username: admin
+    password: admin123456
