@@ -4,6 +4,13 @@
 
 通过管理后台配置上游 BaseURL / APIKEY / 模型，自动生成一个唯一的 `targetModel`，对外暴露兼容 Responses API 的 `/v1/responses` 接口，支持流式 SSE。
 
+通过使用本工具, 可以轻松将任何兼容 OpenAI Chat Completions API 的服务（如 Xiaomi Mimo、 Azure OpenAI、Google Gemini 等）转换为兼容 Responses API 的接口，方便集成到Codex中。
+
+同时, 也提供了一个基于 Vue 3 + Vite 的控制界面，方便用户进行项目管理和接口测试。
+
+![img1](/doc/img1.png)
+![img2](/doc/img2.png)
+
 ## 架构概览
 
 ```
@@ -13,11 +20,11 @@
                └── /v1/*        → 网关接口（Responses API）
 ```
 
-| 组件 | 技术栈 |
-|------|--------|
-| 后端 | Spring Boot 4.0.6 / JDK 17 / Maven / MyBatis / H2 |
-| 前端 | Vue 3 / Vite 8 |
-| 网关 | Nginx 反向代理 |
+| 组件 | 技术栈                                                     |
+|------|---------------------------------------------------------|
+| 后端 | Spring Boot 4.0.6 / JDK 17 / Maven / Smart MyBatis / H2 |
+| 前端 | Vue 3 / Vite 8                                          |
+| 网关 | Nginx 反向代理                                              |
 
 ---
 
@@ -37,19 +44,25 @@ docker pull guoshengkai/chat2response:latest
 docker run -d \
   --name chat2response \
   -p 8080:80 \
-  -e APP_USERNAME=myadmin \
-  -e APP_PASSWORD='MyStrongPassword123' \
+  -e APP_USERNAME='YourUsername' \
+  -e APP_PASSWORD='YourPassword' \
   -e JAVA_OPTS='-Xms256m -Xmx512m' \
+  -e DATASOURCE_URL='jdbc:mysql://YourMysqlHost:3306/chat_response?useSSL=false&serverTimezone=UTC' \
+  -e DATASOURCE_USERNAME='YourMysqlUsername' \
+  -e DATASOURCE_PASSWORD='YourMysqlPassword' \
   guoshengkai/chat2response:latest
 ```
 
 **环境变量说明：**
 
-| 变量 | 说明 | 默认值 |
-|------|------|--------|
-| `APP_USERNAME` | 管理后台用户名 | `admin` |
+| 变量             | 说明 | 默认值           |
+|----------------|------|---------------|
+| `APP_USERNAME` | 管理后台用户名 | `admin`       |
 | `APP_PASSWORD` | 管理后台密码 | `admin123456` |
-| `JAVA_OPTS` | JVM 启动参数（可选） | 空 |
+| `JAVA_OPTS`    | JVM 启动参数（可选） | 空             |
+| `DATASOURCE_URL` | 数据库连接 URL | 空             |
+| `DATASOURCE_USERNAME` | 数据库用户名 | 空（            |
+| `DATASOURCE_PASSWORD` | 数据库密码 | 空             |
 
 运行成功后访问：
 

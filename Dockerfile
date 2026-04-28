@@ -58,6 +58,7 @@ COPY --from=frontend-builder /build/webui/dist /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 
+RUN sed -i '\|include /etc/nginx/sites-enabled/\*;|d' /etc/nginx/nginx.conf
 RUN chmod +x /app/docker-entrypoint.sh \
     && mkdir -p /run/nginx
 

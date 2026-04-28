@@ -3,9 +3,9 @@ spring:
     name: chat2response
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://dev.milvus.189.cn:3306/chat_response?useSSL=false&serverTimezone=UTC
-    username: root
-    password: guoshengkai373
+    url: ${DATASOURCE.URL:jdbc:mysql://dev.milvus.189.cn:3306/chat_response?useSSL=false&serverTimezone=UTC}
+    username: ${DATASOURCE.USERNAME:root}
+    password: ${DATASOURCE.PASSWORD:guoshengkai373}
   mybatis:
     smart:
       auto-sync-db: true
@@ -20,5 +20,5 @@ server:
 
 management:
   user:
-    username: admin
-    password: admin123456
+    username: ${APP.USERNAME:admin}
+    password: ${APP.PASSWORD:admin123456}
